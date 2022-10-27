@@ -10,6 +10,10 @@
 #include <memory>
 #include "PromiseRejectCallback.hpp"
 #include <stdarg.h>
+#include <time.h>
+#include <stdio.h>
+
+using namespace std;
 
 namespace puerts
 {
@@ -435,6 +439,11 @@ namespace puerts
 
     bool JSEngine::Eval(const char *Code, const char* Path)
     {
+        time_t start, end;
+        double result;
+        start = time(NULL);            // time(NULL)을 통해서 현재 시간 반환
+
+
         v8::Isolate* Isolate = MainIsolate;
         v8::Isolate::Scope IsolateScope(Isolate);
         v8::HandleScope HandleScope(Isolate);
@@ -445,6 +454,11 @@ namespace puerts
         v8::Local<v8::String> Source = FV8Utils::V8String(Isolate, Code);
         v8::ScriptOrigin Origin(Url);
         v8::TryCatch TryCatch(Isolate);
+
+        end = time(NULL);
+        result = (double)(end - start);
+        cout << "수행 시간 : " << result << "second" << "\n";
+
 
         auto CompiledScript = v8::Script::Compile(Context, Source, &Origin);
         if (CompiledScript.IsEmpty())
