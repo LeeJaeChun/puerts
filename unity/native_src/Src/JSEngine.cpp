@@ -12,6 +12,7 @@
 #include <stdarg.h>
 #include <time.h>
 #include <stdio.h>
+#include <iostream>
 
 using namespace std;
 
