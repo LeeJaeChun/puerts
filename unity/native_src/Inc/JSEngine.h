@@ -118,8 +118,6 @@ public:
 
     PUERTS_EXPORT_FOR_UT void SetGlobalFunction(const char *Name, CSharpFunctionCallback Callback, int64_t Data);
 
-    PUERTS_EXPORT_FOR_UT void LinkDebug(void(_stdcall* d)(char*));
-
     PUERTS_EXPORT_FOR_UT bool Eval(const char *Code, const char* Path);
 
     PUERTS_EXPORT_FOR_UT int RegisterClass(const char *FullName, int BaseTypeId, CSharpConstructorCallback Constructor, CSharpDestructorCallback Destructor, int64_t Data, int Size);

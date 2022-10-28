@@ -15,15 +15,13 @@ using namespace std;
 
 namespace puerts
 {
-   
-
     v8::Local<v8::ArrayBuffer> NewArrayBuffer(v8::Isolate* Isolate, void *Ptr, size_t Size)
     {
         v8::Local<v8::ArrayBuffer> Ab = v8::ArrayBuffer::New(Isolate, Size);
         void* Buff = Ab->GetContents().Data();
         ::memcpy(Buff, Ptr, Size);
         return Ab;
-    }
+    } 
 
     static void EvalWithPath(const v8::FunctionCallbackInfo<v8::Value>& Info)
     {
@@ -53,14 +51,6 @@ namespace puerts
             return;
         }
         Info.GetReturnValue().Set(Result.ToLocalChecked());
-    }
-
-    void(_stdcall* debugLog)(char*) = NULL;
-
-    void JSEngine::LinkDebug(void(_stdcall* d)(char*))
-    {
-        debugLog = d;
-        d("Debug Link Successful!");
     }
 
     void JSEngine::JSEngineWithNode()
@@ -447,11 +437,6 @@ namespace puerts
 
     bool JSEngine::Eval(const char *Code, const char* Path)
     {
-        if (debugLog != NULL)
-        {
-            debugLog("Test Eval");
-        }
-
         //time_t start, end;
         //double result;
         //start = time(NULL);			// time(NULL)을 통해서 현재 시간 반환
