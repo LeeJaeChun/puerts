@@ -10,21 +10,12 @@
 #include <memory>
 #include "PromiseRejectCallback.hpp"
 #include <stdarg.h>
-#include <time.h>
-#include <stdio.h>
-#include <iostream>
 
 using namespace std;
 
 namespace puerts
 {
-    void(_stdcall* debugLog)(char*) = NULL;
-
-    __declspec(dllexport) void LinkDebug(void(_stdcall* d)(char*))
-    {
-        debugLog = d;
-        d("Debug Link Successful!");
-    }
+   
 
     v8::Local<v8::ArrayBuffer> NewArrayBuffer(v8::Isolate* Isolate, void *Ptr, size_t Size)
     {
@@ -62,6 +53,14 @@ namespace puerts
             return;
         }
         Info.GetReturnValue().Set(Result.ToLocalChecked());
+    }
+
+    void(_stdcall* debugLog)(char*) = NULL;
+
+    void JSEngine::LinkDebug(void(_stdcall* d)(char*))
+    {
+        debugLog = d;
+        d("Debug Link Successful!");
     }
 
     void JSEngine::JSEngineWithNode()
@@ -453,9 +452,9 @@ namespace puerts
             debugLog("Test Eval");
         }
 
-        time_t start, end;
-        double result;
-        start = time(NULL);			// time(NULL)을 통해서 현재 시간 반환
+        //time_t start, end;
+        //double result;
+        //start = time(NULL);			// time(NULL)을 통해서 현재 시간 반환
 
         v8::Isolate* Isolate = MainIsolate;
         v8::Isolate::Scope IsolateScope(Isolate);
@@ -469,14 +468,14 @@ namespace puerts
         v8::TryCatch TryCatch(Isolate);
 
 
-        end = time(NULL);
-        result = (double)(end - start);
-        char log[sizeof(result)];
-        memcpy(log, &result, sizeof(result));
-        if (debugLog != NULL)
-        {
-            debugLog(log);
-        }
+        //end = time(NULL);
+        //result = (double)(end - start);
+        //char log[sizeof(result)];
+        //memcpy(log, &result, sizeof(result));
+        //if (debugLog != NULL)
+        //{
+        //    debugLog(log);
+        //}
 
 
         auto CompiledScript = v8::Script::Compile(Context, Source, &Origin);
